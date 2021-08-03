@@ -1,1 +1,2 @@
-Creating web site to show case portfolio.
+# Portfolio
+Hey welcome to portfolio, creating web site to showcase portfolio.
