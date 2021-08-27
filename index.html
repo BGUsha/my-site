@@ -11,333 +11,333 @@
         Hey, I am Usha!
         I studied at MSRIT, Bangalore.
     </h1>
-    <h5><--START<*h5>
-<h5>TRACE ON<*h5>
-<h5>        #*********************************<*h5>
-<h5>        # Repository and class creation<*h5>
-<h5>        #*********************************<*h5>
-<h5>        IF(REPEXISTS("CUST") == 0)THEN<*h5>
-<h5>        #{<*h5>
-<h5>                CREATEREP ("CUST")<*h5>
-<h5>        #}<*h5>
-<h5>        ENDIF<*h5>
-<h5><*h5>
-<h5>        IF(CLASSEXISTS("CUST","DATA") == 0)THEN<*h5>
-<h5>        #{<*h5>
-<h5>                CREATECLASS("CUST","DATA",5)<*h5>
-<h5>        #}<*h5>
-<h5>        ENDIF<*h5>
-<h5>        #--------------------------------------------------------<*h5>
-<h5>        #               PRINTING THE BANCS REPOSITORY<*h5>
-<h5>        #--------------------------------------------------------<*h5>
-<h5>        sv_a = urhk_B2K_printRepos("BANCS")<*h5>
-<h5>        print(sv_a)<*h5>
-<h5>        #--------------------------------------------------<*h5>
-<h5>        sv_u = urhk_B2k_PID("")<*h5>
-<h5>        CUST.DATA.pid = BANCS.OUTPARAM.PID<*h5>
-<h5>        CUST.DATA.BODDate = mid$(BANCS.STDIN.BODDate,0,10)<*h5>
-<h5><*h5>
-<h5>        CUST.DATA.succListFile = "SuccessReport_" + CUST.DATA.pid + ".RPT"<*h5>
-<h5>        CUST.DATA.failListFile = "FailureReport_" + CUST.DATA.pid + ".RPT"<*h5>
-<h5>        sv_k="      A/c Success Report Based on Unclaimed TDA Accounts "<*h5>
-<h5>        sv_r=system("echo "+'"'+sv_k+'"'+"   >> "+CUST.DATA.succListFile)<*h5>
-<h5>        print(sv_r)<*h5>
-<h5><*h5>
-<h5>        sv_k="      A/c  Failure Report Based On Unclaimed TDA Accounts "<*h5>
-<h5>        sv_r=system("echo "+'"'+sv_k+'"'+"   >> "+CUST.DATA.failListFile)<*h5>
-<h5>        print(sv_r)<*h5>
-<h5><*h5>
-<h5>        sv_k="--------------------------------------------------------------------------------------------------"<*h5>
-<h5>        sv_r=system("echo "+'"'+sv_k+'"'+"   >> "+CUST.DATA.succListFile)<*h5>
-<h5>        print(sv_r)<*h5>
-<h5>        sv_k="--------------------------------------------------------------------------------------------------"<*h5>
-<h5>        sv_r=system("echo "+'"'+sv_k+'"'+"   >> "+CUST.DATA.failListFile)<*h5>
-<h5>        print(sv_r)<*h5>
-<h5>        CUST.DATA.totAmt = "0"<*h5>
-<h5>        CUST.DATA.drAcctNum = ""<*h5>
-<h5><*h5>
-<h5>        sv_u  = urhk_MTTS_Close("")<*h5>
-<h5>        print(sv_u)<*h5>
-<h5><*h5>
-<h5><*h5>
-<h5>        CUST.DATA.rateCode = "NOR"<*h5>
-<h5>        CUST.DATA.tranRefNum = ""<*h5>
-<h5>        CUST.DATA.tranPart = "MODAMT FEE"<*h5>
-<h5><*h5>
-<h5><*h5>
-<h5>        #=======================================#<*h5>
-<h5>        #       INITIALIZATION PART START       #<*h5>
-<h5>        #=======================================#<*h5>
-<h5><*h5>
-<h5>        BANCS.INPARAM.PostTranFlg               = "Y"<*h5>
-<h5>        BANCS.INPARAM.CommitFlg                 = "Y"<*h5>
-<h5>        BANCS.INPARAM.InsertTranWithValidnFlg   = "N"<*h5>
-<h5>        BANCS.INPARAM.RestrictModifyInd         = "SECOND_GROUP"<*h5>
-<h5>        BANCS.INPARAM.ErrorCheckForLuw          ="Y"<*h5>
-<h5>        BANCS.INPARAM.ValidationFlag            = "N"<*h5>
-<h5>        BANCS.INPARAM.proxyPostFlg              = "Y"<*h5>
-<h5>        BANCS.INPARAM.CheckExceptions           = "N"<*h5>
-<h5>        BANCS.INPARAM.PartTranLUWFlg            = "Y"<*h5>
-<h5>        BANCS.INPARAM.CheckExceptions           = "N"<*h5>
-<h5>        BANCS.INPARAM.IgnoreExcp                = "I"<*h5>
-<h5><*h5>
-<h5>        sv_a = urhk_MTTS_Initialize("")<*h5>
-<h5>        print(sv_a)<*h5>
-<h5><*h5>
-<h5>        #=======================================#<*h5>
-<h5>        #       DEFINING A TRANSACTION          #<*h5>
-<h5>        #=======================================#<*h5>
-<h5><*h5>
-<h5>        MTT.TranDetails.TranDate                        = "0"<*h5>
-<h5>        MTT.TranDetails.TranType                        = "T"<*h5>
-<h5>        MTT.TranDetails.TranSubType                     = "BI"<*h5>
-<h5>        MTT.TranDetails.Remarks                         = "crdi transaction"<*h5>
-<h5>        MTT.TranDetails.IgnoreExcp                      = "Y"<*h5>
-<h5>        MTT.TranDetails.Consolidate                     = "Y"<*h5>
-<h5>        MTT.TranDetails.ReversalFlg                     = "N"<*h5>
-<h5>        MTT.TranDetails.PostFlag                        = "Y"<*h5>
-<h5>        MTT.TranDetails.PostTranFlag                    = "N"<*h5>
-<h5>        sv_r = urhk_MTTS_DefineTransaction("CREDI")<*h5>
-<h5>        print(sv_r)<*h5>
-<h5><*h5>
-<h5><*h5>
-<h5>        CUST.DATA.debitAmount="0"<*h5>
-<h5>        sv_k = "drAcctNum,debitTranAmt|select distinct accnt_no,user_calc_chrge_amt from custom.modamt where entity_cre_flg ='Y' and  rownum <5 "<*h5>
-<h5>        sv_e = urhk_dbCursorOpenWithBind(sv_k)<*h5>
-<h5>        print(sv_e)<*h5>
-<h5>        IF(sv_e == 0) then<*h5>
-<h5>        #{<*h5>
-<h5>                sv_n = BANCS.OUTPARAM.DB_CURSOR_NUMBER<*h5>
-<h5>                print(sv_n)<*h5>
-<h5>                sv_w = urhk_dbCursorFetch(sv_n)<*h5>
-<h5>                print(sv_w)<*h5>
-<h5><*h5>
-<h5>                while(sv_w == 0)<*h5>
-<h5>                #{<*h5>
-<h5>                        CUST.DATA.drAcctNum = BANCS.OUTPARAM.drAcctNum<*h5>
-<h5>                        print(CUST.DATA.drAcctNum)<*h5>
-<h5>                        CUST.DATA.debitTranAmt = BANCS.OUTPARAM.debitTranAmt<*h5>
-<h5>                        print(CUST.DATA.debitTranAmt)<*h5>
-<h5>                        CUST.DATA.debitAmount = cdouble(CUST.DATA.debitTranAmt) + cdouble(CUST.DATA.debitAmount)<*h5>
-<h5>                        print(CUST.DATA.debitAmount)<*h5>
-<h5><*h5>
-<h5>                        #=======================================#<*h5>
-<h5>                        #       DEBIT PART TRANSACTION          #<*h5>
-<h5>                        #=======================================#<*h5>
-<h5>                        sv_x = CDOUBLE(CUST.DATA.debitTranAmt) * -1<*h5>
-<h5>                        PRINT(FORMAT$(sv_x,"%14.2f"))<*h5>
-<h5>                        CUST.DATA.tranRefNum = "DR - " + CUST.DATA.drAcctNum<*h5>
-<h5><*h5>
-<h5>                        MTT.PartTranDetails.Account             = CUST.DATA.drAcctNum<*h5>
-<h5>                        MTT.PartTranDetails.RefCurrency         = BANCS.STDIN.homeCrncyCode<*h5>
-<h5>                        MTT.PartTranDetails.ValueDate           = "0"<*h5>
-<h5>                        MTT.PartTranDetails.partTranType = "D"<*h5>
-<h5>                        MTT.PartTranDetails.Particulars         = CUST.DATA.tranPart<*h5>
-<h5>                        MTT.PartTranDetails.Particulars2 = "DATABR"<*h5>
-<h5>                        MTT.PartTranDetails.RefAmount           =  FORMAT$(sv_x,"%14.2f")<*h5>
-<h5>                        MTT.PartTranDetails.Remarks             = CUST.DATA.tranRefNum<*h5>
-<h5>                        MTT.PartTranDetails.RefNum              = ""<*h5>
-<h5>                        MTT.PartTranDetails.Consolidate         = "Y"<*h5>
-<h5>                        MTT.PartTranDetails.TranIdentifier      = "CREDI"<*h5>
-<h5>                        MTT.PartTranDetails.Rate                = ""<*h5>
-<h5>                        MTT.PartTranDetails.RateCode            = ""<*h5>
-<h5><*h5>
-<h5>                        sv_r = urhk_MTTS_DefinePartTran("DEBITTRAN")<*h5>
-<h5>                        print(sv_r)<*h5>
-<h5>                        IF(sv_r != 0)THEN<*h5>
-<h5>                        #{<*h5>
-<h5>                                PRINT("Failed to Define MTT Transaction")<*h5>
-<h5>                                CUST.DATA.errMsg = "Debit Transaction Failed"<*h5>
-<h5>                                sv_r = urhk_MTTS_ReportErrorCondition("")<*h5>
-<h5>                                PRINT(sv_r)<*h5>
-<h5>                                IF(FIELDEXISTS(MTT.Error.Description)) THEN<*h5>
-<h5>                                #{<*h5>
-<h5>                                        PRINT(MTT.Error.Description)<*h5>
-<h5>                                        CUST.DATA.messageField = MTT.Error.Description<*h5>
-<h5>                                        print(CUST.DATA.messageField)<*h5>
-<h5>                                        sv_l = "Account Number:"+CUST.DATA.td_acctnum+"|Error Reason:"+CUST.DATA.messageField+" "<*h5>
-<h5>                                        sv_r=system("echo "+'"'+sv_l+'"'+"   >> "+CUST.DATA.failListFile)<*h5>
-<h5>                                        print(sv_r)<*h5>
-<h5>                                #}<*h5>
-<h5>                                ENDIF<*h5>
-<h5>                                EXITSCRIPT<*h5>
-<h5><*h5>
-<h5>                        #}<*h5>
-<h5>                        ENDIF<*h5>
-<h5>                        sv_w = urhk_dbCursorFetch(sv_n)<*h5>
-<h5>                        print(sv_w)<*h5>
-<h5>                #}<*h5>
-<h5>                DO<*h5>
-<h5>        sv_w = urhk_dbCursorClose(sv_n)<*h5>
-<h5>        print(sv_w)<*h5>
-<h5>        #}<*h5>
-<h5>        ENDIF<*h5>
-<h5>        print(CUST.DATA.debitAmount)<*h5>
-<h5>        CUST.DATA.totAmt = CUST.DATA.debitAmount<*h5>
-<h5><*h5>
-<h5>                #-------------------------------#<*h5>
-<h5>                # Credit part tran type - 1<*h5>
-<h5>                #-------------------------------#<*h5>
-<h5>                CUST.DATA.crAcctId = "1000002NPR"<*h5>
-<h5>                CUST.DATA.td_acctnum=CUST.DATA.crAcctId<*h5>
-<h5>                CUST.DATA.tranRefNum = "CR - " + CUST.DATA.crAcctId<*h5>
-<h5>                PRINT(CUST.DATA.crAcctId)<*h5>
-<h5>                sv_x = CDOUBLE(CUST.DATA.totAmt) * 1<*h5>
-<h5>                PRINT(sv_x)<*h5>
-<h5>                PRINT(FORMAT$(sv_x,"%14.2f"))<*h5>
-<h5><*h5>
-<h5>                        #=======================================#<*h5>
-<h5>                        #       CREDIT PART TRANSACTION-1       #<*h5>
-<h5>                        #=======================================#<*h5>
-<h5><*h5>
-<h5>                        MTT.PartTranDetails.Account             = CUST.DATA.crAcctId<*h5>
-<h5>                        MTT.PartTranDetails.RefCurrency         = BANCS.STDIN.homeCrncyCode<*h5>
-<h5>                        MTT.PartTranDetails.ValueDate           = "0"<*h5>
-<h5>                        MTT.PartTranDetails.Particulars         = "Test"<*h5>
-<h5>                        MTT.PartTranDetails.RefAmount           = FORMAT$(sv_x,"%14.2f")<*h5>
-<h5>                        MTT.PartTranDetails.Remarks             = CUST.DATA.tranRefNum<*h5>
-<h5>                        MTT.PartTranDetails.RefNum              = ""<*h5>
-<h5>                        MTT.PartTranDetails.partTranType = "C"<*h5>
-<h5>                        MTT.PartTranDetails.Consolidate         = "Y"<*h5>
-<h5>                        MTT.PartTranDetails.TranIdentifier      = "CREDI"<*h5>
-<h5>                        MTT.PartTranDetails.Rate                = ""<*h5>
-<h5>                        MTT.PartTranDetails.RateCode            = ""<*h5>
-<h5><*h5>
-<h5><*h5>
-<h5><*h5>
-<h5>                        sv_r = urhk_MTTS_DefinePartTran("CREDIT")<*h5>
-<h5>                        print(sv_r)<*h5>
-<h5>                IF (sv_r == 1) THEN<*h5>
-<h5>                #{<*h5>
-<h5>                        CUST.DATA.errMsg = "Credit Transaction Failed"<*h5>
-<h5>                        sv_r = urhk_MTTS_ReportErrorCondition("")<*h5>
-<h5>                        PRINT(sv_r)<*h5>
-<h5>                        IF(FIELDEXISTS(MTT.Error.Description)) THEN<*h5>
-<h5>                        #{<*h5>
-<h5>                                PRINT(MTT.Error.Description)<*h5>
-<h5>                                CUST.DATA.messageField = MTT.Error.Description<*h5>
-<h5>                                print(CUST.DATA.messageField)<*h5>
-<h5>                                sv_l = "Account Number:"+CUST.DATA.td_acctnum+"|Error Reason:"+CUST.DATA.messageField+" "<*h5>
-<h5>                                sv_r=system("echo "+'"'+sv_l+'"'+"   >> "+CUST.DATA.failListFile)<*h5>
-<h5>                                print(sv_r)<*h5>
-<h5>                        #}<*h5>
-<h5>                        ENDIF<*h5>
-<h5>                        EXITSCRIPT<*h5>
-<h5>                #}<*h5>
-<h5>                ENDIF<*h5>
-<h5>                sv_r = urhk_MTTS_EndDefinition("")<*h5>
-<h5>                PRINT(sv_r)<*h5>
-<h5>                IF (FIELDEXISTS(BANCS.OUTPARAM.MTTTranId))THEN<*h5>
-<h5>                #{<*h5>
-<h5>                        PRINT(BANCS.OUTPARAM.MTTTranId)<*h5>
-<h5>                        CUST.DATA.chrgTranId = TRIM(BANCS.OUTPARAM.MTTTranId)<*h5>
-<h5>                        IF (CUST.DATA.chrgTranId =="") THEN<*h5>
-<h5>                        #{<*h5>
-<h5>                                CUST.DATA.Msg1 = "FAILED"<*h5>
-<h5>                                sv_r = urhk_MTTS_ReportErrorCondition("")<*h5>
-<h5>                                PRINT(sv_r)<*h5>
-<h5>                                IF(FIELDEXISTS(MTT.Error.Description)) THEN<*h5>
-<h5>                                #{<*h5>
-<h5>                                        PRINT(MTT.Error.Description)<*h5>
-<h5>                                        CUST.DATA.messageField = MTT.Error.Description<*h5>
-<h5>                                        print(CUST.DATA.messageField)<*h5>
-<h5>                                        sv_l = "Account Number:"+CUST.DATA.td_acctnum+"|Error Reason:"+CUST.DATA.messageField+" "<*h5>
-<h5>                                        sv_r=system("echo "+'"'+sv_l+'"'+"   >> "+CUST.DATA.failListFile)<*h5>
-<h5>                                        print(sv_r)<*h5>
-<h5>                                        GOTO ENDOFSCRIPT<*h5>
-<h5>                                #}<*h5>
-<h5>                                ENDIF<*h5>
-<h5>                                EXITSCRIPT<*h5>
-<h5>                        #}<*h5>
-<h5>                        ENDIF<*h5>
-<h5>                #}<*h5>
-<h5>                ELSE<*h5>
-<h5>                #{<*h5>
-<h5>                        CUST.DATA.errMsg = "Failed MTT End Definition"<*h5>
-<h5>                        sv_r = urhk_MTTS_ReportErrorCondition("")<*h5>
-<h5>                        PRINT(sv_r)<*h5>
-<h5>                        IF(FIELDEXISTS(MTT.Error.Description)) THEN<*h5>
-<h5>                        #{<*h5>
-<h5>                                CUST.DATA.messageField = MTT.Error.Description<*h5>
-<h5>                                print(CUST.DATA.messageField)<*h5>
-<h5>                                sv_l = "Account Number:"+CUST.DATA.td_acctnum+"|Error Reason:"+CUST.DATA.messageField+" "<*h5>
-<h5>                                sv_r=system("echo "+'"'+sv_l+'"'+"   >> "+CUST.DATA.failListFile)<*h5>
-<h5>                                print(sv_r)<*h5>
-<h5>                                GOTO ENDOFSCRIPT<*h5>
-<h5>                        #}<*h5>
-<h5>                        ENDIF<*h5>
-<h5>                EXITSCRIPT<*h5>
-<h5>                #}<*h5>
-<h5>                ENDIF<*h5>
-<h5><*h5>
-<h5>                sv_u = urhk_MTTS_HandleExceptions("POST")<*h5>
-<h5>                PRINT(sv_u)<*h5>
-<h5>                IF (sv_u != 0) THEN<*h5>
-<h5>                #{<*h5>
-<h5>                        sv_u = urhk_MTTS_ReportErrorCondition("")<*h5>
-<h5>                        IF (sv_u != 0) THEN<*h5>
-<h5>                        #{<*h5>
-<h5>                                PRINT(MTT.Error.Description)<*h5>
-<h5>                                sv_u = urhk_MTTS_ReportErrorCondition("")<*h5>
-<h5>                                IF (sv_u != 0) THEN<*h5>
-<h5>                                #{<*h5>
-<h5>                                        CUST.DATA.messageField = MTT.Error.Description<*h5>
-<h5>                                        print(CUST.DATA.messageField)<*h5>
-<h5>                                        sv_l = "Account Number:"+CUST.DATA.td_acctnum+"|Error Reason:"+CUST.DATA.messageField+" "<*h5>
-<h5>                                        sv_r=system("echo "+'"'+sv_l+'"'+"   >> "+CUST.DATA.failListFile)<*h5>
-<h5>                                        print(sv_r)<*h5>
-<h5>                                        GOTO ENDOFSCRIPT<*h5>
-<h5>                                #}<*h5>
-<h5>                                ENDIF<*h5>
-<h5>                        #}<*h5>
-<h5>                        ENDIF<*h5>
-<h5>                EXITSCRIPT<*h5>
-<h5>                #}<*h5>
-<h5>                ENDIF<*h5>
-<h5><*h5>
-<h5>                sv_u = urhk_MTTS_HandleExceptions("ENTRY")<*h5>
-<h5>                PRINT(sv_u)<*h5>
-<h5>                IF (sv_u != 0) THEN<*h5>
-<h5>                #{<*h5>
-<h5>                        sv_u = urhk_MTTS_ReportErrorCondition("")<*h5>
-<h5>                        IF (sv_u != 0) THEN<*h5>
-<h5>                        #{<*h5>
-<h5>                                PRINT(MTT.Error.Description)<*h5>
-<h5>                                sv_u = urhk_MTTS_ReportErrorCondition("")<*h5>
-<h5>                                IF (sv_u != 0) THEN<*h5>
-<h5>                                #{<*h5>
-<h5>                                        CUST.DATA.messageField = MTT.Error.Description<*h5>
-<h5>                                        print(CUST.DATA.messageField)<*h5>
-<h5>                                        sv_l = "Account Number:"+CUST.DATA.td_acctnum+"|Error Reason:"+CUST.DATA.messageField+" "<*h5>
-<h5>                                        sv_r=system("echo "+'"'+sv_l+'"'+"   >> "+CUST.DATA.failListFile)<*h5>
-<h5>                                print(sv_r)<*h5>
-<h5>                                GOTO ENDOFSCRIPT<*h5>
-<h5>                                #}<*h5>
-<h5>                                ENDIF<*h5>
-<h5>                        #}<*h5>
-<h5>                        ENDIF<*h5>
-<h5>                PRINT(sv_u)<*h5>
-<h5>                EXITSCRIPT<*h5>
-<h5>                #}<*h5>
-<h5>                ENDIF<*h5>
-<h5>                #======================================<*h5>
-<h5>                #Close MTT<*h5>
-<h5>                #======================================<*h5>
-<h5>                sv_u  = urhk_MTTS_Close("")<*h5>
-<h5>                print(sv_u)<*h5>
-<h5>                IF (sv_u == 0) THEN<*h5>
-<h5>                #{<*h5>
-<h5>                        CUST.DATA.Msg1 = "SUCCESS"<*h5>
-<h5>                        PRINT(BANCS.OUTPARAM.MTTPostingStatus)<*h5>
-<h5>                        PRINT(BANCS.OUTPARAM.MTTTranId)<*h5>
-<h5>                        sv_l = "Account Number:"+CUST.DATA.drAcctNum+"-----Account debited Successfully"<*h5>
-<h5>                        sv_r=system("echo "+'"'+sv_l+'"'+"   >> "+CUST.DATA.succListFile)<*h5>
-<h5>                        print(sv_r)<*h5>
-<h5>                #}<*h5>
-<h5>                ENDIF<*h5>
-<h5><*h5>
-<h5>EXITSCRIPT<*h5>
-<h5>TRACE OFF<*h5>
-<h5>end--><*h5>
+    <h5><--START</h5>
+<h5>TRACE ON</h5>
+<h5>        #*********************************</h5>
+<h5>        # Repository and class creation</h5>
+<h5>        #*********************************</h5>
+<h5>        IF(REPEXISTS("CUST") == 0)THEN</h5>
+<h5>        #{</h5>
+<h5>                CREATEREP ("CUST")</h5>
+<h5>        #}</h5>
+<h5>        ENDIF</h5>
+<h5></h5>
+<h5>        IF(CLASSEXISTS("CUST","DATA") == 0)THEN</h5>
+<h5>        #{</h5>
+<h5>                CREATECLASS("CUST","DATA",5)</h5>
+<h5>        #}</h5>
+<h5>        ENDIF</h5>
+<h5>        #--------------------------------------------------------</h5>
+<h5>        #               PRINTING THE BANCS REPOSITORY</h5>
+<h5>        #--------------------------------------------------------</h5>
+<h5>        sv_a = urhk_B2K_printRepos("BANCS")</h5>
+<h5>        print(sv_a)</h5>
+<h5>        #--------------------------------------------------</h5>
+<h5>        sv_u = urhk_B2k_PID("")</h5>
+<h5>        CUST.DATA.pid = BANCS.OUTPARAM.PID</h5>
+<h5>        CUST.DATA.BODDate = mid$(BANCS.STDIN.BODDate,0,10)</h5>
+<h5></h5>
+<h5>        CUST.DATA.succListFile = "SuccessReport_" + CUST.DATA.pid + ".RPT"</h5>
+<h5>        CUST.DATA.failListFile = "FailureReport_" + CUST.DATA.pid + ".RPT"</h5>
+<h5>        sv_k="      A/c Success Report Based on Unclaimed TDA Accounts "</h5>
+<h5>        sv_r=system("echo "+'"'+sv_k+'"'+"   >> "+CUST.DATA.succListFile)</h5>
+<h5>        print(sv_r)</h5>
+<h5></h5>
+<h5>        sv_k="      A/c  Failure Report Based On Unclaimed TDA Accounts "</h5>
+<h5>        sv_r=system("echo "+'"'+sv_k+'"'+"   >> "+CUST.DATA.failListFile)</h5>
+<h5>        print(sv_r)</h5>
+<h5></h5>
+<h5>        sv_k="--------------------------------------------------------------------------------------------------"</h5>
+<h5>        sv_r=system("echo "+'"'+sv_k+'"'+"   >> "+CUST.DATA.succListFile)</h5>
+<h5>        print(sv_r)</h5>
+<h5>        sv_k="--------------------------------------------------------------------------------------------------"</h5>
+<h5>        sv_r=system("echo "+'"'+sv_k+'"'+"   >> "+CUST.DATA.failListFile)</h5>
+<h5>        print(sv_r)</h5>
+<h5>        CUST.DATA.totAmt = "0"</h5>
+<h5>        CUST.DATA.drAcctNum = ""</h5>
+<h5></h5>
+<h5>        sv_u  = urhk_MTTS_Close("")</h5>
+<h5>        print(sv_u)</h5>
+<h5></h5>
+<h5></h5>
+<h5>        CUST.DATA.rateCode = "NOR"</h5>
+<h5>        CUST.DATA.tranRefNum = ""</h5>
+<h5>        CUST.DATA.tranPart = "MODAMT FEE"</h5>
+<h5></h5>
+<h5></h5>
+<h5>        #=======================================#</h5>
+<h5>        #       INITIALIZATION PART START       #</h5>
+<h5>        #=======================================#</h5>
+<h5></h5>
+<h5>        BANCS.INPARAM.PostTranFlg               = "Y"</h5>
+<h5>        BANCS.INPARAM.CommitFlg                 = "Y"</h5>
+<h5>        BANCS.INPARAM.InsertTranWithValidnFlg   = "N"</h5>
+<h5>        BANCS.INPARAM.RestrictModifyInd         = "SECOND_GROUP"</h5>
+<h5>        BANCS.INPARAM.ErrorCheckForLuw          ="Y"</h5>
+<h5>        BANCS.INPARAM.ValidationFlag            = "N"</h5>
+<h5>        BANCS.INPARAM.proxyPostFlg              = "Y"</h5>
+<h5>        BANCS.INPARAM.CheckExceptions           = "N"</h5>
+<h5>        BANCS.INPARAM.PartTranLUWFlg            = "Y"</h5>
+<h5>        BANCS.INPARAM.CheckExceptions           = "N"</h5>
+<h5>        BANCS.INPARAM.IgnoreExcp                = "I"</h5>
+<h5></h5>
+<h5>        sv_a = urhk_MTTS_Initialize("")</h5>
+<h5>        print(sv_a)</h5>
+<h5></h5>
+<h5>        #=======================================#</h5>
+<h5>        #       DEFINING A TRANSACTION          #</h5>
+<h5>        #=======================================#</h5>
+<h5></h5>
+<h5>        MTT.TranDetails.TranDate                        = "0"</h5>
+<h5>        MTT.TranDetails.TranType                        = "T"</h5>
+<h5>        MTT.TranDetails.TranSubType                     = "BI"</h5>
+<h5>        MTT.TranDetails.Remarks                         = "crdi transaction"</h5>
+<h5>        MTT.TranDetails.IgnoreExcp                      = "Y"</h5>
+<h5>        MTT.TranDetails.Consolidate                     = "Y"</h5>
+<h5>        MTT.TranDetails.ReversalFlg                     = "N"</h5>
+<h5>        MTT.TranDetails.PostFlag                        = "Y"</h5>
+<h5>        MTT.TranDetails.PostTranFlag                    = "N"</h5>
+<h5>        sv_r = urhk_MTTS_DefineTransaction("CREDI")</h5>
+<h5>        print(sv_r)</h5>
+<h5></h5>
+<h5></h5>
+<h5>        CUST.DATA.debitAmount="0"</h5>
+<h5>        sv_k = "drAcctNum,debitTranAmt|select distinct accnt_no,user_calc_chrge_amt from custom.modamt where entity_cre_flg ='Y' and  rownum <5 "</h5>
+<h5>        sv_e = urhk_dbCursorOpenWithBind(sv_k)</h5>
+<h5>        print(sv_e)</h5>
+<h5>        IF(sv_e == 0) then</h5>
+<h5>        #{</h5>
+<h5>                sv_n = BANCS.OUTPARAM.DB_CURSOR_NUMBER</h5>
+<h5>                print(sv_n)</h5>
+<h5>                sv_w = urhk_dbCursorFetch(sv_n)</h5>
+<h5>                print(sv_w)</h5>
+<h5></h5>
+<h5>                while(sv_w == 0)</h5>
+<h5>                #{</h5>
+<h5>                        CUST.DATA.drAcctNum = BANCS.OUTPARAM.drAcctNum</h5>
+<h5>                        print(CUST.DATA.drAcctNum)</h5>
+<h5>                        CUST.DATA.debitTranAmt = BANCS.OUTPARAM.debitTranAmt</h5>
+<h5>                        print(CUST.DATA.debitTranAmt)</h5>
+<h5>                        CUST.DATA.debitAmount = cdouble(CUST.DATA.debitTranAmt) + cdouble(CUST.DATA.debitAmount)</h5>
+<h5>                        print(CUST.DATA.debitAmount)</h5>
+<h5></h5>
+<h5>                        #=======================================#</h5>
+<h5>                        #       DEBIT PART TRANSACTION          #</h5>
+<h5>                        #=======================================#</h5>
+<h5>                        sv_x = CDOUBLE(CUST.DATA.debitTranAmt) * -1</h5>
+<h5>                        PRINT(FORMAT$(sv_x,"%14.2f"))</h5>
+<h5>                        CUST.DATA.tranRefNum = "DR - " + CUST.DATA.drAcctNum</h5>
+<h5></h5>
+<h5>                        MTT.PartTranDetails.Account             = CUST.DATA.drAcctNum</h5>
+<h5>                        MTT.PartTranDetails.RefCurrency         = BANCS.STDIN.homeCrncyCode</h5>
+<h5>                        MTT.PartTranDetails.ValueDate           = "0"</h5>
+<h5>                        MTT.PartTranDetails.partTranType = "D"</h5>
+<h5>                        MTT.PartTranDetails.Particulars         = CUST.DATA.tranPart</h5>
+<h5>                        MTT.PartTranDetails.Particulars2 = "DATABR"</h5>
+<h5>                        MTT.PartTranDetails.RefAmount           =  FORMAT$(sv_x,"%14.2f")</h5>
+<h5>                        MTT.PartTranDetails.Remarks             = CUST.DATA.tranRefNum</h5>
+<h5>                        MTT.PartTranDetails.RefNum              = ""</h5>
+<h5>                        MTT.PartTranDetails.Consolidate         = "Y"</h5>
+<h5>                        MTT.PartTranDetails.TranIdentifier      = "CREDI"</h5>
+<h5>                        MTT.PartTranDetails.Rate                = ""</h5>
+<h5>                        MTT.PartTranDetails.RateCode            = ""</h5>
+<h5></h5>
+<h5>                        sv_r = urhk_MTTS_DefinePartTran("DEBITTRAN")</h5>
+<h5>                        print(sv_r)</h5>
+<h5>                        IF(sv_r != 0)THEN</h5>
+<h5>                        #{</h5>
+<h5>                                PRINT("Failed to Define MTT Transaction")</h5>
+<h5>                                CUST.DATA.errMsg = "Debit Transaction Failed"</h5>
+<h5>                                sv_r = urhk_MTTS_ReportErrorCondition("")</h5>
+<h5>                                PRINT(sv_r)</h5>
+<h5>                                IF(FIELDEXISTS(MTT.Error.Description)) THEN</h5>
+<h5>                                #{</h5>
+<h5>                                        PRINT(MTT.Error.Description)</h5>
+<h5>                                        CUST.DATA.messageField = MTT.Error.Description</h5>
+<h5>                                        print(CUST.DATA.messageField)</h5>
+<h5>                                        sv_l = "Account Number:"+CUST.DATA.td_acctnum+"|Error Reason:"+CUST.DATA.messageField+" "</h5>
+<h5>                                        sv_r=system("echo "+'"'+sv_l+'"'+"   >> "+CUST.DATA.failListFile)</h5>
+<h5>                                        print(sv_r)</h5>
+<h5>                                #}</h5>
+<h5>                                ENDIF</h5>
+<h5>                                EXITSCRIPT</h5>
+<h5></h5>
+<h5>                        #}</h5>
+<h5>                        ENDIF</h5>
+<h5>                        sv_w = urhk_dbCursorFetch(sv_n)</h5>
+<h5>                        print(sv_w)</h5>
+<h5>                #}</h5>
+<h5>                DO</h5>
+<h5>        sv_w = urhk_dbCursorClose(sv_n)</h5>
+<h5>        print(sv_w)</h5>
+<h5>        #}</h5>
+<h5>        ENDIF</h5>
+<h5>        print(CUST.DATA.debitAmount)</h5>
+<h5>        CUST.DATA.totAmt = CUST.DATA.debitAmount</h5>
+<h5></h5>
+<h5>                #-------------------------------#</h5>
+<h5>                # Credit part tran type - 1</h5>
+<h5>                #-------------------------------#</h5>
+<h5>                CUST.DATA.crAcctId = "1000002NPR"</h5>
+<h5>                CUST.DATA.td_acctnum=CUST.DATA.crAcctId</h5>
+<h5>                CUST.DATA.tranRefNum = "CR - " + CUST.DATA.crAcctId</h5>
+<h5>                PRINT(CUST.DATA.crAcctId)</h5>
+<h5>                sv_x = CDOUBLE(CUST.DATA.totAmt) * 1</h5>
+<h5>                PRINT(sv_x)</h5>
+<h5>                PRINT(FORMAT$(sv_x,"%14.2f"))</h5>
+<h5></h5>
+<h5>                        #=======================================#</h5>
+<h5>                        #       CREDIT PART TRANSACTION-1       #</h5>
+<h5>                        #=======================================#</h5>
+<h5></h5>
+<h5>                        MTT.PartTranDetails.Account             = CUST.DATA.crAcctId</h5>
+<h5>                        MTT.PartTranDetails.RefCurrency         = BANCS.STDIN.homeCrncyCode</h5>
+<h5>                        MTT.PartTranDetails.ValueDate           = "0"</h5>
+<h5>                        MTT.PartTranDetails.Particulars         = "Test"</h5>
+<h5>                        MTT.PartTranDetails.RefAmount           = FORMAT$(sv_x,"%14.2f")</h5>
+<h5>                        MTT.PartTranDetails.Remarks             = CUST.DATA.tranRefNum</h5>
+<h5>                        MTT.PartTranDetails.RefNum              = ""</h5>
+<h5>                        MTT.PartTranDetails.partTranType = "C"</h5>
+<h5>                        MTT.PartTranDetails.Consolidate         = "Y"</h5>
+<h5>                        MTT.PartTranDetails.TranIdentifier      = "CREDI"</h5>
+<h5>                        MTT.PartTranDetails.Rate                = ""</h5>
+<h5>                        MTT.PartTranDetails.RateCode            = ""</h5>
+<h5></h5>
+<h5></h5>
+<h5></h5>
+<h5>                        sv_r = urhk_MTTS_DefinePartTran("CREDIT")</h5>
+<h5>                        print(sv_r)</h5>
+<h5>                IF (sv_r == 1) THEN</h5>
+<h5>                #{</h5>
+<h5>                        CUST.DATA.errMsg = "Credit Transaction Failed"</h5>
+<h5>                        sv_r = urhk_MTTS_ReportErrorCondition("")</h5>
+<h5>                        PRINT(sv_r)</h5>
+<h5>                        IF(FIELDEXISTS(MTT.Error.Description)) THEN</h5>
+<h5>                        #{</h5>
+<h5>                                PRINT(MTT.Error.Description)</h5>
+<h5>                                CUST.DATA.messageField = MTT.Error.Description</h5>
+<h5>                                print(CUST.DATA.messageField)</h5>
+<h5>                                sv_l = "Account Number:"+CUST.DATA.td_acctnum+"|Error Reason:"+CUST.DATA.messageField+" "</h5>
+<h5>                                sv_r=system("echo "+'"'+sv_l+'"'+"   >> "+CUST.DATA.failListFile)</h5>
+<h5>                                print(sv_r)</h5>
+<h5>                        #}</h5>
+<h5>                        ENDIF</h5>
+<h5>                        EXITSCRIPT</h5>
+<h5>                #}</h5>
+<h5>                ENDIF</h5>
+<h5>                sv_r = urhk_MTTS_EndDefinition("")</h5>
+<h5>                PRINT(sv_r)</h5>
+<h5>                IF (FIELDEXISTS(BANCS.OUTPARAM.MTTTranId))THEN</h5>
+<h5>                #{</h5>
+<h5>                        PRINT(BANCS.OUTPARAM.MTTTranId)</h5>
+<h5>                        CUST.DATA.chrgTranId = TRIM(BANCS.OUTPARAM.MTTTranId)</h5>
+<h5>                        IF (CUST.DATA.chrgTranId =="") THEN</h5>
+<h5>                        #{</h5>
+<h5>                                CUST.DATA.Msg1 = "FAILED"</h5>
+<h5>                                sv_r = urhk_MTTS_ReportErrorCondition("")</h5>
+<h5>                                PRINT(sv_r)</h5>
+<h5>                                IF(FIELDEXISTS(MTT.Error.Description)) THEN</h5>
+<h5>                                #{</h5>
+<h5>                                        PRINT(MTT.Error.Description)</h5>
+<h5>                                        CUST.DATA.messageField = MTT.Error.Description</h5>
+<h5>                                        print(CUST.DATA.messageField)</h5>
+<h5>                                        sv_l = "Account Number:"+CUST.DATA.td_acctnum+"|Error Reason:"+CUST.DATA.messageField+" "</h5>
+<h5>                                        sv_r=system("echo "+'"'+sv_l+'"'+"   >> "+CUST.DATA.failListFile)</h5>
+<h5>                                        print(sv_r)</h5>
+<h5>                                        GOTO ENDOFSCRIPT</h5>
+<h5>                                #}</h5>
+<h5>                                ENDIF</h5>
+<h5>                                EXITSCRIPT</h5>
+<h5>                        #}</h5>
+<h5>                        ENDIF</h5>
+<h5>                #}</h5>
+<h5>                ELSE</h5>
+<h5>                #{</h5>
+<h5>                        CUST.DATA.errMsg = "Failed MTT End Definition"</h5>
+<h5>                        sv_r = urhk_MTTS_ReportErrorCondition("")</h5>
+<h5>                        PRINT(sv_r)</h5>
+<h5>                        IF(FIELDEXISTS(MTT.Error.Description)) THEN</h5>
+<h5>                        #{</h5>
+<h5>                                CUST.DATA.messageField = MTT.Error.Description</h5>
+<h5>                                print(CUST.DATA.messageField)</h5>
+<h5>                                sv_l = "Account Number:"+CUST.DATA.td_acctnum+"|Error Reason:"+CUST.DATA.messageField+" "</h5>
+<h5>                                sv_r=system("echo "+'"'+sv_l+'"'+"   >> "+CUST.DATA.failListFile)</h5>
+<h5>                                print(sv_r)</h5>
+<h5>                                GOTO ENDOFSCRIPT</h5>
+<h5>                        #}</h5>
+<h5>                        ENDIF</h5>
+<h5>                EXITSCRIPT</h5>
+<h5>                #}</h5>
+<h5>                ENDIF</h5>
+<h5></h5>
+<h5>                sv_u = urhk_MTTS_HandleExceptions("POST")</h5>
+<h5>                PRINT(sv_u)</h5>
+<h5>                IF (sv_u != 0) THEN</h5>
+<h5>                #{</h5>
+<h5>                        sv_u = urhk_MTTS_ReportErrorCondition("")</h5>
+<h5>                        IF (sv_u != 0) THEN</h5>
+<h5>                        #{</h5>
+<h5>                                PRINT(MTT.Error.Description)</h5>
+<h5>                                sv_u = urhk_MTTS_ReportErrorCondition("")</h5>
+<h5>                                IF (sv_u != 0) THEN</h5>
+<h5>                                #{</h5>
+<h5>                                        CUST.DATA.messageField = MTT.Error.Description</h5>
+<h5>                                        print(CUST.DATA.messageField)</h5>
+<h5>                                        sv_l = "Account Number:"+CUST.DATA.td_acctnum+"|Error Reason:"+CUST.DATA.messageField+" "</h5>
+<h5>                                        sv_r=system("echo "+'"'+sv_l+'"'+"   >> "+CUST.DATA.failListFile)</h5>
+<h5>                                        print(sv_r)</h5>
+<h5>                                        GOTO ENDOFSCRIPT</h5>
+<h5>                                #}</h5>
+<h5>                                ENDIF</h5>
+<h5>                        #}</h5>
+<h5>                        ENDIF</h5>
+<h5>                EXITSCRIPT</h5>
+<h5>                #}</h5>
+<h5>                ENDIF</h5>
+<h5></h5>
+<h5>                sv_u = urhk_MTTS_HandleExceptions("ENTRY")</h5>
+<h5>                PRINT(sv_u)</h5>
+<h5>                IF (sv_u != 0) THEN</h5>
+<h5>                #{</h5>
+<h5>                        sv_u = urhk_MTTS_ReportErrorCondition("")</h5>
+<h5>                        IF (sv_u != 0) THEN</h5>
+<h5>                        #{</h5>
+<h5>                                PRINT(MTT.Error.Description)</h5>
+<h5>                                sv_u = urhk_MTTS_ReportErrorCondition("")</h5>
+<h5>                                IF (sv_u != 0) THEN</h5>
+<h5>                                #{</h5>
+<h5>                                        CUST.DATA.messageField = MTT.Error.Description</h5>
+<h5>                                        print(CUST.DATA.messageField)</h5>
+<h5>                                        sv_l = "Account Number:"+CUST.DATA.td_acctnum+"|Error Reason:"+CUST.DATA.messageField+" "</h5>
+<h5>                                        sv_r=system("echo "+'"'+sv_l+'"'+"   >> "+CUST.DATA.failListFile)</h5>
+<h5>                                print(sv_r)</h5>
+<h5>                                GOTO ENDOFSCRIPT</h5>
+<h5>                                #}</h5>
+<h5>                                ENDIF</h5>
+<h5>                        #}</h5>
+<h5>                        ENDIF</h5>
+<h5>                PRINT(sv_u)</h5>
+<h5>                EXITSCRIPT</h5>
+<h5>                #}</h5>
+<h5>                ENDIF</h5>
+<h5>                #======================================</h5>
+<h5>                #Close MTT</h5>
+<h5>                #======================================</h5>
+<h5>                sv_u  = urhk_MTTS_Close("")</h5>
+<h5>                print(sv_u)</h5>
+<h5>                IF (sv_u == 0) THEN</h5>
+<h5>                #{</h5>
+<h5>                        CUST.DATA.Msg1 = "SUCCESS"</h5>
+<h5>                        PRINT(BANCS.OUTPARAM.MTTPostingStatus)</h5>
+<h5>                        PRINT(BANCS.OUTPARAM.MTTTranId)</h5>
+<h5>                        sv_l = "Account Number:"+CUST.DATA.drAcctNum+"-----Account debited Successfully"</h5>
+<h5>                        sv_r=system("echo "+'"'+sv_l+'"'+"   >> "+CUST.DATA.succListFile)</h5>
+<h5>                        print(sv_r)</h5>
+<h5>                #}</h5>
+<h5>                ENDIF</h5>
+<h5></h5>
+<h5>EXITSCRIPT</h5>
+<h5>TRACE OFF</h5>
+<h5>end--></h5>
 </body>
 </html>
